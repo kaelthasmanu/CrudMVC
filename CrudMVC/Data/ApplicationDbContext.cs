@@ -1,3 +1,4 @@
+using CrudMVC.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CrudMVC.Data;
@@ -9,4 +10,6 @@ public class ApplicationDbContext : DbContext
     {
         
     }
+    
+    public DbSet<Contact> Contacts { get; set; }
 }

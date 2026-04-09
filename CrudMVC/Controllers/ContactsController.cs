@@ -92,6 +92,56 @@ public class ContactsController : Controller
         }
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var contact = await _context.Contacts
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (contact == null)
+        {
+            return NotFound();
+        }
+        
+        return View(contact);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var contact = await _context.Contacts
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (contact == null)
+        {
+            return NotFound();
+        }
+        
+        return View(contact);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var contact = await _context.Contacts.FindAsync(id);
+        if (contact == null)
+        {
+            return NotFound();
+        }
+        _context.Contacts.Remove(contact);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
     private bool ContactExist(int id)
     {
         return _context.Contacts.Any(e => e.Id == id);

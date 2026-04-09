@@ -1,0 +1,64 @@
+@model IEnumerable<CrudMVC.Models.Contact>
+
+@{
+    ViewData["Title"] = "List Contacts";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Contacts</title>
+</head>
+<body>
+<div>
+    <h1 class="text-center">Contacts</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New Contact</a>
+    </p>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Direction</th>
+            <th style="width: 220px;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Model == null || !Model.Any())
+        {
+            <tr>
+                <td colspan="6" class="text-center">No contacts found.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var contact in Model)
+            {
+                <tr>
+                    <td>@contact.Id</td>
+                    <td>@contact.Name</td>
+                    <td>@contact.Email</td>
+                    <td>@contact.Phone</td>
+                    <td>@contact.Direction</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@contact.Id"
+                           class="btn btn-sm">Edit</a>
+                        
+                        <a asp-action="Details" asp-route-id="@contact.Id"
+                           class="btn btn-sm">Details</a>
+                        
+                        <a asp-action="Delete" asp-route-id="@contact.Id"
+                           class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
